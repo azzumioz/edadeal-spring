@@ -14,9 +14,6 @@ public class Product {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "segment_id")
-    private int segmentId;
-
     @Column(name = "title")
     private String title;
 
@@ -35,24 +32,27 @@ public class Product {
     @Column(name = "discount_date")
     private String discountDate;
 
-    @Column(name = "shop_name")
-    private String shopName;
-
     @Column(name = "date")
     private LocalDateTime date;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "segment_id")
+    private Segment segment;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
 
     public Product() {
     }
 
-    public Product(int segmentId, String title, String quantity, BigDecimal priceNew, BigDecimal priceOld, String discount, String discountDate, String shopName, LocalDateTime date) {
-        this.segmentId = segmentId;
+    public Product(String title, String quantity, BigDecimal priceNew, BigDecimal priceOld, String discount, String discountDate, String shopName, LocalDateTime date) {
         this.title = title;
         this.quantity = quantity;
         this.priceNew = priceNew;
         this.priceOld = priceOld;
         this.discount = discount;
         this.discountDate = discountDate;
-        this.shopName = shopName;
         this.date = date;
     }
 
@@ -62,14 +62,6 @@ public class Product {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getSegmentId() {
-        return segmentId;
-    }
-
-    public void setSegmentId(int segmentId) {
-        this.segmentId = segmentId;
     }
 
     public String getTitle() {
@@ -120,14 +112,6 @@ public class Product {
         this.discountDate = discountDate;
     }
 
-    public String getShopName() {
-        return shopName;
-    }
-
-    public void setShopName(String shopName) {
-        this.shopName = shopName;
-    }
-
     public LocalDateTime getDate() {
         return date;
     }
@@ -136,18 +120,32 @@ public class Product {
         this.date = date;
     }
 
+    public Segment getSegment() {
+        return segment;
+    }
+
+    public void setSegment(Segment segment) {
+        this.segment = segment;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", segmentId=" + segmentId +
                 ", title='" + title + '\'' +
                 ", quantity='" + quantity + '\'' +
                 ", priceNew=" + priceNew +
                 ", priceOld=" + priceOld +
                 ", discount='" + discount + '\'' +
                 ", discountDate='" + discountDate + '\'' +
-                ", shopName='" + shopName + '\'' +
                 ", date=" + date +
                 '}';
     }

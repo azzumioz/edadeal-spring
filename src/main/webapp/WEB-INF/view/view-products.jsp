@@ -8,7 +8,8 @@
 <br>
 
 <c:url var="urlButton" value="product-request">
-    <c:param name="segmentId" value="${seg.id}"/>
+    <c:param name="segmentId" value="${segment}"/>
+    <c:param name="shopId" value="${shop}"/>
 </c:url>
 
 <input type="button" value="Запросить информацию" onclick="window.location.href='${urlButton}'">
@@ -31,8 +32,8 @@
             <td>${product.priceOld}</td>
             <td>${product.discount}</td>
             <td>${product.discountDate}</td>
-            <td>${product.shopName}</td>
-            <td>${product.segmentId}</td>
+            <td>${product.shop.title}</td>
+            <td>${product.segment.title}</td>
         </tr>
     </c:forEach>
 </table>

@@ -1,12 +1,11 @@
 package ru.lightapps.edadeal.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "segment")
-public class Segment {
+@Table(name = "shop")
+public class Shop {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,23 +18,15 @@ public class Segment {
     @Column(name = "value")
     private String value;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "segment")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shop")
     private List<Product> products;
 
-    public Segment() {
+    public Shop() {
     }
 
-    public Segment(String title, String value) {
+    public Shop(String title, String value) {
         this.title = title;
         this.value = value;
-    }
-
-    public void addProductToSegment(Product product) {
-        if (products == null) {
-            products = new ArrayList<>();
-        }
-        products.add(product);
-        product.setSegment(this);
     }
 
     public int getId() {
@@ -64,7 +55,7 @@ public class Segment {
 
     @Override
     public String toString() {
-        return "Segment{" +
+        return "Shop{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", value='" + value + '\'' +

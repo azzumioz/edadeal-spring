@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lightapps.edadeal.dao.ProductDAO;
-import ru.lightapps.edadeal.dao.SegmentDAO;
 import ru.lightapps.edadeal.entity.Product;
 import ru.lightapps.edadeal.entity.Segment;
+import ru.lightapps.edadeal.entity.Shop;
 
 import java.util.List;
 
@@ -20,26 +20,22 @@ public class ProductServiceImpl implements ProductService {
     private ProductDAO productDAO;
 
     @Autowired
-    private SegmentDAO segmentDAO;
-
-    @Autowired
     private ProductParseService productParseService;
 
     @Override
     @Transactional
-    public List<Product> getAllProductsBySegment(Segment segment) {
+    public List<Product> getAllProductsBySegmentAndShop(Segment segment, Shop shop) {
         if (segment.getId() == ID_SEGMENT_ALL) {
             return productDAO.getAllProducts();
         } else {
-            return productDAO.getAllProductsBySegment(segment);
+            return productDAO.getAllProductsBySegmentAndShop(segment, shop);
         }
     }
 
     @Override
     @Transactional
-    public void requestProduct(int segmentId) {
-        Segment segment = segmentDAO.getSegment(segmentId);
-        List<Product> products = productParseService.parse(segmentId, segment.getValue());
+    public void parseProductsBySegmentAndRetailer(Segment segment, Shop shop) {
+        List<Product> products = productParseService.parse(segment, shop);
         for (Product product : products) {
             productDAO.saveListProducts(product);
         }

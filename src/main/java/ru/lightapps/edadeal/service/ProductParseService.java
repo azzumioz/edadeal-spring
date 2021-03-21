@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.lightapps.edadeal.dao.SegmentDAO;
 import ru.lightapps.edadeal.entity.Product;
+import ru.lightapps.edadeal.entity.Segment;
+import ru.lightapps.edadeal.entity.Shop;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -56,7 +58,7 @@ public class ProductParseService {
     @Value("${parse.page.count}")
     private int pageParseCount;
 
-    public List<Product> parse(int segmentId, String segmentValue) {
+    public List<Product> parse(Segment segment, Shop shop) {
 
         String url;
         LocalDateTime dateTime = LocalDateTime.now();
@@ -75,7 +77,7 @@ public class ProductParseService {
         driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 
         for (int i = 1; i <= pageParseCount; i++) {
-            url = urlLink + city + "/offers?page=" + i + "&segment=" + segmentValue;
+            url = urlLink + city +  "/retailers/" + shop.getValue() + "?page=" + i + "&segment=" + segment.getValue();
             log.info("\nParse url: {}", url);
             driver.get(url);
 
@@ -132,14 +134,14 @@ public class ProductParseService {
                 }
                 Product newProduct = new Product();
                 newProduct.setTitle(description);
-                newProduct.setShopName(magazine);
                 newProduct.setQuantity(quantity);
                 newProduct.setPriceNew(priceNew);
                 newProduct.setPriceOld(priceOld);
                 newProduct.setDiscount(discount);
                 newProduct.setDiscountDate(discountDate);
                 newProduct.setDate(dateTime);
-                newProduct.setSegmentId(segmentId);
+                newProduct.setSegment(segment);
+                newProduct.setShop(shop);
                 list.add(newProduct);
             }
         }
@@ -147,6 +149,8 @@ public class ProductParseService {
         driver.quit();
         return list;
     }
+
+
 
     private static BigDecimal parseToInt(String priceText) {
         String priceInt;

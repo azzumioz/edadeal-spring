@@ -5,10 +5,16 @@
 <html>
 <body>
 <h2>Выберите категорию</h2>
-<form:form action="product" modelAttribute="segment">
-    Раздел <form:select path="id">
-    <form:options items="${allSegments}" itemValue="id" itemLabel="title"/>
+<form:form action="product" modelAttribute="selectForm">
+
+    Раздел <form:select path="segment">
+    <form:options items="${segments}" itemValue="id" itemLabel="title"/>
 </form:select>
+
+    Магазин <form:select path="shop">
+    <form:options items="${shops}" itemValue="id" itemLabel="title"/>
+</form:select>
+
     <input type="submit" value="OK">
 </form:form>
 </body>
