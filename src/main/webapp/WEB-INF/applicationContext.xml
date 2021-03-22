@@ -33,8 +33,8 @@
           destroy-method="close">
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/edadeal_db?useSSL=false&amp;serverTimezone=UTC"/>
-        <property name="user" value="bestuser"/>
-        <property name="password" value="bestuser"/>
+        <property name="user" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
     </bean>
 
     <bean id="sessionFactory"
