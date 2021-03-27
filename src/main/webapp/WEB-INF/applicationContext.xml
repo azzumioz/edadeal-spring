@@ -29,10 +29,9 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-          destroy-method="close">
-        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/edadeal_db?useSSL=false&amp;serverTimezone=UTC"/>
+    <bean id="dataSource" class="${db.dataSource}" destroy-method="close">
+        <property name="driverClass" value="${db.driver.class}"/>
+        <property name="jdbcUrl" value="${db.jdbc.url}"/>
         <property name="user" value="${db.username}"/>
         <property name="password" value="${db.password}"/>
     </bean>
